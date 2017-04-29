@@ -1,0 +1,17 @@
+(jbuild_version 1)
+
+(library
+ ((name        dtcprotocol_piqi)
+  (public_name dtc-pb)
+  (modules (dtcprotocol_piqi))
+  (libraries (piqirun.pb))))
+
+(rule
+ ((targets (DTCProtocol.proto.piqi))
+  (deps    (DTCProtocol.proto))
+  (action (run piqi of-proto ${<} -o ${@}))))
+
+(rule
+ ((targets (dtcprotocol_piqi.ml))
+  (deps    (DTCProtocol.proto.piqi))
+  (action  (run piqic-ocaml ${<}))))

@@ -1,0 +1,8 @@
+(executable
+ ((name test)
+  (libraries (piqirun.pb dtcprotocol_piqi))))
+
+(alias
+ ((name    runtest)
+  (deps    (test.exe))
+  (action  (run ${<}))))
