@@ -1,5 +1,5 @@
 module P = Piqirun
-module DTC = Dtcprotocol_piqi
+module DTC = Dtc_pb.Dtcprotocol_piqi
 
 let bleh s =
   let p = P.init_from_string s in

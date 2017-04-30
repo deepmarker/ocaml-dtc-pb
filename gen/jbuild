@@ -1,10 +1,10 @@
 (jbuild_version 1)
 
 (library
- ((name        dtcprotocol_piqi)
+ ((name        dtc_pb)
   (public_name dtc-pb)
-  (modules (dtcprotocol_piqi))
-  (libraries (piqirun.pb))))
+  (modules (dtcprotocol_piqi encoding))
+  (libraries (piqirun.pb ocplib-endian))))
 
 (rule
  ((targets (DTCProtocol.proto.piqi))
