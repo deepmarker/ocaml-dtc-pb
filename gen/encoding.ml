@@ -29,10 +29,12 @@ type t =
   | Request of meta
   | Response of meta
 
+let message_size = 16
+
 let read buf =
   let open EndianString.LittleEndian in
   let size = get_uint16 buf 0 in
-  if size <> 16 then None
+  if size <> message_size then None
   else begin
     let kind = get_uint16 buf 2 in
     let version = Int32.to_int (get_int32 buf 4) in
@@ -44,6 +46,11 @@ let read buf =
       | _ -> None
   end
 
+let read_exn buf =
+  match read buf with
+  | None -> invalid_arg "Encoding.read_exn"
+  | Some t -> t
+
 let write buf t =
   let open EndianString.LittleEndian in
   let kind, version, encoding = match t with
@@ -51,8 +58,13 @@ let write buf t =
       6, version, encoding
     | Response { version; encoding } ->
       7, version, encoding in
-  set_int16 buf 0 16 ;
+  set_int16 buf 0 message_size ;
   set_int16 buf 2 kind ;
   set_int32 buf 4 (Int32.of_int version) ;
   set_int32 buf 8 (Int32.of_int (int_of_encoding encoding)) ;
   String.blit "DTC\x00" 0 buf 12 4
+
+let to_string t =
+  let buf = Bytes.create message_size in
+  write buf t ;
+  Bytes.unsafe_to_string buf
