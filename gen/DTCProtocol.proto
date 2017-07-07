@@ -1309,7 +1309,7 @@ message HistoricalPriceDataRequest
 	optional sfixed64 StartDateTime = 5;
 	optional sfixed64 EndDateTime = 6;
 	optional uint32 MaxDaysToReturn = 7;
-	optional uint32  UseZLibCompression = 8;
+	optional bool  UseZLibCompression = 8;
 	optional uint32 RequestDividendAdjustedStockData = 9;
 	optional uint32 Flag_1 = 10;
 }
@@ -1320,7 +1320,7 @@ message HistoricalPriceDataResponseHeader
 	optional int32 RequestID = 1;
 	optional HistoricalDataIntervalEnum RecordInterval = 2;
 
-	optional uint32 UseZLibCompression = 3;
+	optional bool UseZLibCompression = 3;
 
 	optional bool NoRecordsToReturn = 4;
 
