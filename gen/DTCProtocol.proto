@@ -100,6 +100,7 @@ enum DTCMessageType
 	ORDER_UPDATE = 301;
 
 	HISTORICAL_ORDER_FILLS_REQUEST = 303;
+	HISTORICAL_ORDER_FILLS_REJECT = 308;
 	HISTORICAL_ORDER_FILL_RESPONSE = 304;
 
 	CURRENT_POSITIONS_REQUEST = 305;
@@ -1009,7 +1010,7 @@ message OpenOrdersRequest
 {
 	optional int32 RequestID = 1;
 
-	optional int32 RequestAllOrders = 2;
+	optional bool RequestAllOrders = 2;
 
 	optional string ServerOrderID = 3;
 
