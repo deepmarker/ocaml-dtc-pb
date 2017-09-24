@@ -261,6 +261,7 @@ enum OrderTypeEnum
   ORDER_TYPE_STOP = 3;
   ORDER_TYPE_STOP_LIMIT = 4;
   ORDER_TYPE_MARKET_IF_TOUCHED = 5;
+  ORDER_TYPE_LIMIT_IF_TOUCHED = 6;
 }
 
 //============================================================================
