@@ -1,0 +1,7 @@
+(jbuild_version 1)
+
+(library
+ ((name        encoding)
+  (public_name dtc-pb.encoding)
+  (synopsis "")
+  (libraries (ocplib-endian))))

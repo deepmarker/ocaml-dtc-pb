@@ -1,8 +1,10 @@
-module P = Piqirun
-module DTC = Dtc_pb.Dtcprotocol_piqi
+open Pbrt
+open Dtc_pb.Dtcprotocol_pb
 
 let bleh s =
-  let p = P.init_from_string s in
-  let lr = DTC.parse_logon_request p in
-  let lr_gen = DTC.gen_logon_request lr in
-  P.to_string lr_gen
+  let enc = Encoder.create () in
+  let dec = Decoder.of_bytes s in
+  let lr = decode_logon_request dec in
+  Format.printf "%a@." Dtc_pb.Dtcprotocol_pp.pp_logon_request lr ;
+  encode_logon_request lr enc ;
+  Format.printf "%s@." (Encoder.to_bytes enc |> Bytes.unsafe_to_string)

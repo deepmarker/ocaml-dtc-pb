@@ -11,10 +11,9 @@ bug-reports: "https://github.com/vbmithr/ocaml-dtc-pb/issues"
 tags: []
 available: [ ocaml-version >= "4.03.0" ]
 depends: [
-  "jbuilder" {build & >= "1.0+beta8"}
-  "piqi" {build & >= "0.7.5"}
-  "piqilib" {>= "0.6.13"}
+  "jbuilder" {build & >= "1.0+beta16"}
+  "ocaml-protoc" {"1.2.0"}
   "ocplib-endian" {>= "1.0"}
 ]
 depopts: []
-build:[[ "jbuilder" "build" "@install" ]]
+build: [ "jbuilder" "build" "-j" jobs "-p" name "@install" ]

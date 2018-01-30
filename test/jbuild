@@ -1,6 +1,6 @@
 (executable
  ((name test)
-  (libraries (piqirun.pb dtc_pb))))
+  (libraries (ocaml-protoc dtc-pb))))
 
 (alias
  ((name    runtest)
