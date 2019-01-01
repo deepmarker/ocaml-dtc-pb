@@ -1,4 +1,4 @@
-opam-version: "1.2"
+opam-version: "2.0"
 name: "dtc-pb"
 version: "1.0"
 maintainer: "Vincent Bernardoff <vb@luminar.eu.org>"
@@ -9,12 +9,10 @@ license: "ISC"
 dev-repo: "git+https://github.com/vbmithr/ocaml-dtc-pb.git"
 bug-reports: "https://github.com/vbmithr/ocaml-dtc-pb/issues"
 tags: []
-available: [ ocaml-version >= "4.03.0" ]
 depends: [
-  "jbuilder" {build & >= "1.0+beta8"}
-  "piqi" {build & >= "0.7.5"}
-  "piqilib" {>= "0.6.13"}
+  "dune" {build & >= "1.0.0"}
+  "piqi" {build & >= "0.7.6"}
+  "piqilib" {>= "0.6.14"}
   "ocplib-endian" {>= "1.0"}
 ]
-depopts: []
-build:[[ "jbuilder" "build" "@install" ]]
+build: [ "dune" "build" "-j" jobs "-p" name "@install" ]

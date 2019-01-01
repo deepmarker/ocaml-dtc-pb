@@ -1,8 +1,0 @@
-(executable
- ((name test)
-  (libraries (piqirun.pb dtc_pb))))
-
-(alias
- ((name    runtest)
-  (deps    (test.exe))
-  (action  (run ${<}))))
