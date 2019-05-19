@@ -6,7 +6,7 @@ package DTC_PB;
 // DTC protocol version
 enum DTCVersion 
 {
-	CURRENT_VERSION = 7;
+	CURRENT_VERSION = 8;
 }
 
 
@@ -74,12 +74,14 @@ enum DTCMessageType
 	MARKET_DEPTH_SNAPSHOT_LEVEL_INT = 132;
 	MARKET_DEPTH_UPDATE_LEVEL = 106;
 	MARKET_DEPTH_UPDATE_LEVEL_COMPACT = 118;
+	MARKET_DEPTH_UPDATE_LEVEL_COMPACT_2 = 139;
 	MARKET_DEPTH_UPDATE_LEVEL_INT = 133;
 	MARKET_DEPTH_FULL_UPDATE_10 = 123;
 	MARKET_DEPTH_FULL_UPDATE_20 = 105;
 
 	MARKET_DATA_FEED_STATUS = 100;
 	MARKET_DATA_FEED_SYMBOL_STATUS = 116;
+	TRADING_SYMBOL_STATUS = 138;
 
 	// Order entry and modification
 	SUBMIT_NEW_SINGLE_ORDER = 208;
@@ -100,12 +102,11 @@ enum DTCMessageType
 	ORDER_UPDATE = 301;
 
 	HISTORICAL_ORDER_FILLS_REQUEST = 303;
-	HISTORICAL_ORDER_FILLS_REJECT = 308;
 	HISTORICAL_ORDER_FILL_RESPONSE = 304;
+	HISTORICAL_ORDER_FILLS_REJECT = 308;
 
 	CURRENT_POSITIONS_REQUEST = 305;
 	CURRENT_POSITIONS_REJECT = 307;
-
 	POSITION_UPDATE = 306;
 
 	// Account list
@@ -130,10 +131,19 @@ enum DTCMessageType
 	ACCOUNT_BALANCE_REQUEST = 601;
 	ACCOUNT_BALANCE_REJECT = 602;	
 	ACCOUNT_BALANCE_UPDATE = 600;
+	HISTORICAL_ACCOUNT_BALANCES_REQUEST = 603;
+	HISTORICAL_ACCOUNT_BALANCES_REJECT = 604;
+	HISTORICAL_ACCOUNT_BALANCE_RESPONSE = 606;
 
 	// Logging
 	USER_MESSAGE = 700;
 	GENERAL_LOG_MESSAGE = 701;
+	ALERT_MESSAGE = 702;
+
+	JOURNAL_ENTRY_ADD = 703;
+	JOURNAL_ENTRIES_REQUEST = 704;
+	JOURNAL_ENTRIES_REJECT = 705;
+	JOURNAL_ENTRY_RESPONSE = 706;
 
 	// Historical price data
 	HISTORICAL_PRICE_DATA_REQUEST= 800;
@@ -376,6 +386,12 @@ enum HistoricalDataIntervalEnum
   INTERVAL_10_SECONDS = 10;
   INTERVAL_30_SECONDS = 30;
   INTERVAL_1_MINUTE = 60;
+  INTERVAL_5_MINUTE = 300;
+  INTERVAL_10_MINUTE = 600;
+  INTERVAL_15_MINUTE = 900;
+  INTERVAL_30_MINUTE = 1800;
+  INTERVAL_1_HOUR = 3600;
+  INTERVAL_2_HOURS = 7200;
   INTERVAL_1_DAY = 86400;
   INTERVAL_1_WEEK = 604800;
 }
@@ -390,7 +406,15 @@ enum HistoricalPriceDataRejectReasonCodeEnum
   HPDR_GENERAL_REJECT_ERROR = 4;
 }
 
-
+//============================================================================
+enum TradingStatusEnum
+{
+  TRADING_STATUS_UNKNOWN = 0;
+  TRADING_STATUS_PRE_OPEN = 1;
+  TRADING_STATUS_OPEN = 2;
+  TRADING_STATUS_CLOSE = 3;
+  TRADING_STATUS_TRADING_HALT = 4;
+}
 
 //============================================================================
 message EncodingRequest
@@ -477,6 +501,13 @@ message MarketDataFeedSymbolStatus
 }
 
 //============================================================================
+message TradingSymbolStatus
+{
+	optional uint32 SymbolID = 1;
+	optional TradingStatusEnum Status = 2;
+}
+
+//============================================================================
 message MarketDataRequest
 {
 	optional RequestActionEnum RequestAction = 1;
@@ -524,6 +555,7 @@ message MarketDataSnapshot
 	optional double BidAskDateTime = 16;
 	optional uint32 SessionSettlementDateTime = 17;
 	optional uint32 TradingSessionDate = 18;
+	optional TradingStatusEnum TradingStatus = 19;
 }
 
 //============================================================================
@@ -548,6 +580,7 @@ message MarketDataSnapshot_Int
 	optional double BidAskDateTime = 16;
 	optional uint32 SessionSettlementDateTime = 17;
 	optional uint32 TradingSessionDate = 18;
+	optional TradingStatusEnum TradingStatus = 19;
 }
 
 //============================================================================
@@ -582,10 +615,13 @@ message MarketDepthSnapshotLevel
 	optional AtBidOrAskEnum Side = 2;
 	optional double Price = 3;
 	optional double Quantity = 4;
-	optional uint32  Level = 5;
+	optional uint32 Level = 5;
 
 	optional bool IsFirstMessageInBatch = 6;
 	optional bool IsLastMessageInBatch = 7;
+	optional double DateTime = 8;
+
+	optional uint32 NumOrders = 9;
 }
 
 //============================================================================
@@ -599,6 +635,9 @@ message MarketDepthSnapshotLevel_Int
 
 	optional bool IsFirstMessageInBatch = 6;
 	optional bool IsLastMessageInBatch = 7;
+	optional double DateTime = 8;
+
+	optional uint32 NumOrders = 9;
 }
 
 //============================================================================
@@ -612,6 +651,8 @@ message MarketDepthUpdateLevel
 	optional MarketDepthUpdateTypeEnum UpdateType = 5;
 
 	optional double DateTime = 6;
+
+	optional uint32 NumOrders = 7;
 }
 
 //============================================================================
@@ -625,6 +666,8 @@ message MarketDepthUpdateLevel_Int
 	optional MarketDepthUpdateTypeEnum UpdateType = 5;
 
 	optional double DateTime = 6;
+
+	optional uint32 NumOrders = 7;
 }
 
 //============================================================================
@@ -638,6 +681,20 @@ message MarketDepthUpdateLevelCompact
 	optional MarketDepthUpdateTypeEnum UpdateType = 5;
 
 	optional uint32 DateTime = 6;
+
+	optional uint32 NumOrders = 7;
+}
+
+//============================================================================
+message MarketDepthUpdateLevelCompact2
+{
+	optional uint32 SymbolID = 1;
+	optional int32 Side = 2;
+	optional int32 UpdateType = 3;
+	optional uint32 NumOrders = 4;
+	optional float Price = 5;
+	optional float Quantity = 6;
+	optional uint32 DateTime = 7;
 }
 
 //============================================================================
@@ -677,6 +734,8 @@ message MarketDataUpdateSessionNumTrades
 {
 	optional uint32 SymbolID = 1;
 	optional int32 NumTrades = 2;
+
+	optional uint32 TradingSessionDate = 3;
 }
 
 //============================================================================
@@ -728,6 +787,7 @@ message MarketDataUpdateTradeWithUnbundledIndicator
 	optional double Price = 4;
 	optional uint32 Volume = 5;
 	optional double DateTime = 6;
+	optional uint32 ExchangeCode = 7;
 }
 
 //============================================================================
@@ -790,6 +850,8 @@ message MarketDataUpdateOpenInterest
 {
 	optional uint32 SymbolID = 1;
 	optional uint32 OpenInterest = 2;
+
+	optional uint32 TradingSessionDate = 3;
 }
 
 //============================================================================
@@ -903,9 +965,9 @@ message CancelReplaceOrder
 	optional double Quantity = 5;
 	optional bool Price1IsSet = 6;
 	optional bool Price2IsSet = 7;
-	optional OrderTypeEnum OrderType = 8;
 	optional TimeInForceEnum TimeInForce = 9;
 	optional uint64 GoodTillDateTime = 10;
+	optional uint32 UpdatePrice1OffsetToParent = 11;
 }
 
 //============================================================================
@@ -920,9 +982,9 @@ message CancelReplaceOrderInt
 	optional int64 Quantity = 6;
 	optional bool Price1IsSet = 7;
 	optional bool Price2IsSet = 8;
-	optional OrderTypeEnum OrderType = 9;
 	optional TimeInForceEnum TimeInForce = 10;
-	optional uint32 GoodTillDateTime = 11;
+	optional uint64 GoodTillDateTime = 11;
+	optional uint32 UpdatePrice1OffsetToParent = 12;
 }
 
 //============================================================================
@@ -966,6 +1028,10 @@ message SubmitNewOCOOrder
 	optional OpenCloseTradeEnum OpenOrClose = 21;
 
 	optional PartialFillHandlingEnum PartialFillHandling = 22;
+
+	optional uint32 UseOffsets = 23;
+	optional double OffsetFromParent1 = 24;
+	optional double OffsetFromParent2 = 25;
 }
 
 //============================================================================
@@ -1028,6 +1094,8 @@ message HistoricalOrderFillsRequest
 	optional int32 NumberOfDays = 3;
 
 	optional string TradeAccount = 4;
+
+	optional sfixed64 StartDateTime = 5;
 }
 
 //============================================================================
@@ -1108,6 +1176,7 @@ message OrderUpdate
 	optional string FreeFormText = 33;
 
 	optional sfixed64 OrderReceivedDateTime = 34;
+	optional double LatestTransactionDateTime = 35;
 }
 
 //============================================================================
@@ -1139,6 +1208,12 @@ message HistoricalOrderFillResponse
 	optional OpenCloseTradeEnum OpenClose = 13;
 
 	optional bool NoOrderFills = 14;
+
+	optional string InfoText = 15;
+
+	optional double HighPriceDuringPosition = 16;
+	optional double LowPriceDuringPosition = 17;
+	optional double PositionQuantity = 18;
 }
 
 //============================================================================
@@ -1162,6 +1237,8 @@ message PositionUpdate
 	optional bool NoPositions = 10;
 
 	optional bool Unsolicited = 11;
+	optional double MarginRequirement = 12;
+	optional uint32 EntryDateTime = 13;
 }
 
 //============================================================================
@@ -1204,6 +1281,9 @@ message SymbolsForExchangeRequest
 	optional string Exchange = 2;
 
 	optional SecurityTypeEnum SecurityType = 3;
+	optional RequestActionEnum RequestAction = 4;
+
+	optional string Symbol = 5;
 }
 
 //============================================================================
@@ -1292,6 +1372,13 @@ message SecurityDefinitionResponse
 	optional float DisplayPriceMultiplier = 24;
 
 	optional string ExchangeSymbol = 25;
+
+	optional float InitialMarginRequirement = 26;
+	optional float MaintenanceMarginRequirement = 27;
+
+	optional string Currency = 28;
+
+	optional float ContractSize =  29;
 }
 
 
@@ -1330,11 +1417,42 @@ message AccountBalanceUpdate
 	optional string TradeAccount = 5;
 	optional double SecuritiesValue = 6;  // Not including cash
 	optional double MarginRequirement = 7;
-
 	optional int32 TotalNumberMessages = 8;
 	optional int32 MessageNumber = 9;
 	optional bool NoAccountBalances = 10;
 	optional bool Unsolicited = 11;
+	optional double OpenPositionsProfitLoss = 12;
+	optional double DailyProfitLoss = 13;
+	optional string InfoText = 14;
+}
+
+//============================================================================
+message HistoricalAccountBalancesRequest
+{
+	optional int32 RequestID = 1;
+	optional string TradeAccount = 2;
+	optional sfixed64 StartDateTime = 3;
+}
+
+//============================================================================
+message HistoricalAccountBalancesReject
+{
+	optional int32 RequestID = 1;
+	optional string RejectText = 2;
+}
+
+//============================================================================
+message HistoricalAccountBalanceResponse
+{
+	optional int32 RequestID = 1;
+	optional double DateTime = 2;
+	optional double CashBalance = 3;
+	optional string AccountCurrency = 4;
+	optional string TradeAccount = 5;
+	optional bool  IsFinalResponse = 6;
+	optional bool NoAccountBalances = 7;
+	optional string InfoText = 8;
+	optional string TransactionId = 9;
 }
 
 //============================================================================
@@ -1349,6 +1467,42 @@ message UserMessage
 message GeneralLogMessage
 {
 	optional string MessageText = 3;
+}
+
+/*==========================================================================*/
+message JournalEntryAdd
+{
+	optional string JournalEntry = 1;
+	optional sfixed64 DateTime = 2;
+};
+
+/*==========================================================================*/
+message JournalEntriesRequest
+{
+	optional int32 RequestID = 1;
+	optional sfixed64 StartDateTime = 2;
+};
+
+/*==========================================================================*/
+message JournalEntriesReject
+{
+	optional int32 RequestID = 1;
+	optional string RejectText = 2;
+};
+
+/*==========================================================================*/
+message JournalEntryResponse
+{
+	optional string JournalEntry = 1;
+	optional sfixed64 DateTime = 2;
+	optional bool IsFinalResponse = 3;
+};
+	
+//============================================================================
+message AlertMessage
+{
+	optional string MessageText = 3;
+	optional string TradeAccount = 4;
 }
 
 //============================================================================
