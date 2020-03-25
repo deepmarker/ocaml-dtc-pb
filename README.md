@@ -1,12 +1,13 @@
-# ocaml-dtc-pb
+# ocaml-dtc-pb [![Build Status](https://api.travis-ci.com/vbmithr/ocaml-dtc-pb.svg?branch=master)](https://travis-ci.org/vbmithr/ocaml-dtc-pb)
 
 ## Introduction
 
 This library provides access to the [DTC
 Protocol](https://dtcprotocol.org) to an OCaml program. It uses DTC's
 [protobuf](https://developers.google.com/protocol-buffers) flavour,
-leveraging @alavrik's excellent [piqi](http://piqi.org) library for
-automatic conversion of `.proto` files into OCaml types.
+leveraging [@alavrik](https://github.com/alavrik/)'s excellent
+[piqi](http://piqi.org) library for automatic conversion of `.proto`
+files into OCaml types.
 
 ## Usage
 
