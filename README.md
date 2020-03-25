@@ -1,4 +1,4 @@
-# ocaml-dtc-pb [![Build Status](https://api.travis-ci.com/vbmithr/ocaml-dtc-pb.svg?branch=master)](https://travis-ci.org/vbmithr/ocaml-dtc-pb)
+# ocaml-dtc-pb [![Build Status](https://api.travis-ci.com/vbmithr/ocaml-dtc-pb.svg?branch=master)](https://travis-ci.com/github/deepmarker/ocaml-dtc-pb)
 
 ## Introduction
 
