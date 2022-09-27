@@ -92,6 +92,7 @@ enum DTCMessageType
 
 	SUBMIT_NEW_OCO_ORDER = 201;
 	SUBMIT_NEW_OCO_ORDER_INT = 207;
+	SUBMIT_FLATTEN_POSITION_ORDER = 209;
 
 	CANCEL_ORDER = 203;
 
@@ -533,6 +534,7 @@ message MarketDataRequest
 	uint32 SymbolID = 2;
 	string Symbol = 3;
 	string Exchange = 4;
+	uint32 IntervalForSnapshotUpdatesInMilliseconds = 5;
 }
 
 //============================================================================
@@ -961,6 +963,8 @@ message SubmitNewSingleOrder
 	string FreeFormText = 14;
 
 	OpenCloseTradeEnum OpenOrClose = 15;
+
+	double MaxShowQuantity = 16;
 }
 
 //============================================================================
@@ -989,6 +993,19 @@ message SubmitNewSingleOrderInt
 	string FreeFormText = 15;
 
 	OpenCloseTradeEnum OpenOrClose = 16;
+}
+
+//============================================================================
+message SubmitFlattenPositionOrder
+{
+	string Symbol = 1;
+	string Exchange = 2;
+
+	string TradeAccount = 3;
+	string ClientOrderID = 4;
+	string FreeFormText = 5;
+
+	uint32 IsAutomatedOrder = 6;
 }
 
 //============================================================================
@@ -1463,6 +1480,7 @@ message AccountBalanceUpdate
 	double OpenPositionsProfitLoss = 12;
 	double DailyProfitLoss = 13;
 	string InfoText = 14;
+	uint64 TransactionIdentifier = 15;
 }
 
 //============================================================================

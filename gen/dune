@@ -1,15 +1,17 @@
 (library
- (name        dtc_pb)
+ (name dtc_pb)
  (public_name dtc-pb)
  (modules dtcprotocol_piqi encoding)
  (libraries piqirun.pb ocplib-endian))
 
 (rule
  (targets DTCProtocol.proto.piqi)
- (deps    DTCProtocol.proto)
- (action (run piqi of-proto %{deps} -o %{targets})))
+ (deps DTCProtocol.proto)
+ (action
+  (run piqi of-proto %{deps} -o %{targets})))
 
 (rule
  (targets dtcprotocol_piqi.ml)
- (deps    DTCProtocol.proto.piqi)
- (action  (run piqic-ocaml %{deps})))
+ (deps DTCProtocol.proto.piqi)
+ (action
+  (run piqic-ocaml %{deps})))
