@@ -3,11 +3,11 @@ name: "dtc-pb"
 version: "1.0"
 maintainer: "Vincent Bernardoff <vb@luminar.eu.org>"
 authors: ["Vincent Bernardoff <vb@luminar.eu.org>"]
-homepage: "https://github.com/vbmithr/ocaml-dtc-pb"
-doc: "https://vbmithr.github.io/ocaml-dtc-pb/doc"
+homepage: "https://github.com/deepmarker/ocaml-dtc-pb"
+doc: "https://deepmarker.github.io/ocaml-dtc-pb/doc"
 license: "ISC"
-dev-repo: "git+https://github.com/vbmithr/ocaml-dtc-pb.git"
-bug-reports: "https://github.com/vbmithr/ocaml-dtc-pb/issues"
+dev-repo: "git+https://github.com/deepmarker/ocaml-dtc-pb.git"
+bug-reports: "https://github.com/deepmarker/ocaml-dtc-pb/issues"
 tags: []
 depends: [
   "dune" {>= "2.3.1"}
