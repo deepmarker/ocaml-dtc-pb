@@ -494,27 +494,27 @@ message LogonResponse
 	string ReconnectAddress = 4;
 	int32  Integer_1 = 5;
 	string ServerName = 6;
-	uint32 MarketDepthUpdatesBestBidAndAsk = 7;
-	uint32 TradingIsSupported = 8;
-	uint32 OCOOrdersSupported = 9;
-	uint32 OrderCancelReplaceSupported = 10;
+	bool MarketDepthUpdatesBestBidAndAsk = 7;
+	bool TradingIsSupported = 8;
+	bool OCOOrdersSupported = 9;
+	bool OrderCancelReplaceSupported = 10;
 	string SymbolExchangeDelimiter = 11;
-	uint32 SecurityDefinitionsSupported = 12;
-	uint32 HistoricalPriceDataSupported = 13;
-	uint32 ResubscribeWhenMarketDataFeedAvailable = 14;
-	uint32 MarketDepthIsSupported = 15;
-	uint32 OneHistoricalPriceDataRequestPerConnection = 16;
-	uint32 BracketOrdersSupported = 17;
+	bool SecurityDefinitionsSupported = 12;
+	bool HistoricalPriceDataSupported = 13;
+	bool ResubscribeWhenMarketDataFeedAvailable = 14;
+	bool MarketDepthIsSupported = 15;
+	bool OneHistoricalPriceDataRequestPerConnection = 16;
+	bool BracketOrdersSupported = 17;
 	uint32 Unused_1 = 18;
-	uint32 UsesMultiplePositionsPerSymbolAndTradeAccount = 19;
-	uint32 MarketDataSupported = 20;
+	bool UsesMultiplePositionsPerSymbolAndTradeAccount = 19;
+	bool MarketDataSupported = 20;
 }
 
 //============================================================================
 message Logoff
 {
 	string Reason = 1;
-	uint32 DoNotReconnect = 2;
+	bool DoNotReconnect = 2;
 }
 
 //============================================================================
@@ -606,8 +606,8 @@ message MarketDepthSnapshotLevel
 	double Quantity = 4;
 	uint32 Level = 5;
 
-	uint32 IsFirstMessageInBatch = 6;
-	uint32 IsLastMessageInBatch = 7;
+	bool IsFirstMessageInBatch = 6;
+	bool IsLastMessageInBatch = 7;
 	double DateTime = 8;
 
 	uint32 NumOrders = 9;
@@ -836,7 +836,7 @@ message MarketDataUpdateSessionVolume
 	uint32 SymbolID = 1;
 	double Volume = 2;
 	uint32 TradingSessionDate = 3;
-	uint32 IsFinalSessionVolume = 4;
+	bool IsFinalSessionVolume = 4;
 }
 
 //============================================================================
@@ -946,9 +946,9 @@ message SubmitNewSingleOrder
 
 	sfixed64 GoodTillDateTime = 11;
 
-	uint32 IsAutomatedOrder = 12;
+	bool IsAutomatedOrder = 12;
 
-	uint32 IsParentOrder = 13;
+	bool IsParentOrder = 13;
 
 	string FreeFormText = 14;
 
@@ -982,8 +982,8 @@ message SubmitNewSingleOrderInt
 	TimeInForceEnum TimeInForce = 11;
 	sfixed64 GoodTillDateTime = 12;
 
-	uint32 IsAutomatedOrder = 13;
-	uint32 IsParentOrder = 14;
+	bool IsAutomatedOrder = 13;
+	bool IsParentOrder = 14;
 
 	string FreeFormText = 15;
 
@@ -1000,7 +1000,7 @@ message SubmitFlattenPositionOrder
 	string ClientOrderID = 4;
 	string FreeFormText = 5;
 
-	uint32 IsAutomatedOrder = 6;
+	bool IsAutomatedOrder = 6;
 }
 
 //============================================================================
@@ -1009,7 +1009,7 @@ message FlattenPositionsForTradeAccount
 	string TradeAccount = 1;
 	string ClientOrderID = 2;
 	string FreeFormText = 3;
-	uint32 IsAutomatedOrder = 4;
+	bool IsAutomatedOrder = 4;
 }
 
 //============================================================================
@@ -1021,8 +1021,8 @@ message CancelReplaceOrder
 	double Price1 = 3;
 	double Price2 = 4;
 	double Quantity = 5;
-	uint32 Price1IsSet = 6;
-	uint32 Price2IsSet = 7;
+	bool Price1IsSet = 6;
+	bool Price2IsSet = 7;
 	TimeInForceEnum TimeInForce = 9;
 	uint64 GoodTillDateTime = 10;
 	uint32 UpdatePrice1OffsetToParent = 11;
@@ -1041,8 +1041,8 @@ message CancelReplaceOrderInt
 	int64 Price2 = 4;
 	float Divisor = 5;
 	int64 Quantity = 6;
-	uint32 Price1IsSet = 7;
-	uint32 Price2IsSet = 8;
+	bool Price1IsSet = 7;
+	bool Price2IsSet = 8;
 	TimeInForceEnum TimeInForce = 10;
 	uint64 GoodTillDateTime = 11;
 	uint32 UpdatePrice1OffsetToParent = 12;
@@ -1081,7 +1081,7 @@ message SubmitNewOCOOrder
 
 	string TradeAccount = 17;
 
-	uint32 IsAutomatedOrder = 18;
+	bool IsAutomatedOrder = 18;
 
 	string ParentTriggerClientOrderID = 19;
 
@@ -1091,7 +1091,7 @@ message SubmitNewOCOOrder
 
 	PartialFillHandlingEnum PartialFillHandling = 22;
 
-	uint32 UseOffsets = 23;
+	bool UseOffsets = 23;
 	double OffsetFromParent1 = 24;
 	double OffsetFromParent2 = 25;
 	uint32 MaintainSamePricesOnParentFill = 26;
@@ -1127,7 +1127,7 @@ message SubmitNewOCOOrderInt
 
 	string TradeAccount = 17;
 
-	uint32 IsAutomatedOrder = 18;
+	bool IsAutomatedOrder = 18;
 
 	string ParentTriggerClientOrderID = 19;
 
@@ -1145,7 +1145,7 @@ message OpenOrdersRequest
 {
 	int32 RequestID = 1;
 
-	int32 RequestAllOrders = 2;
+	bool RequestAllOrders = 2;
 
 	string ServerOrderID = 3;
 
@@ -1233,7 +1233,7 @@ message OrderUpdate
 	string TradeAccount = 26;
 	string InfoText = 27;
 
-	uint32 NoOrders = 28;
+	bool NoOrders = 28;
 	string ParentServerOrderID = 29;
 	string OCOLinkedOrderServerOrderID = 30;
 
@@ -1277,7 +1277,7 @@ message HistoricalOrderFillResponse
 
 	OpenCloseTradeEnum OpenClose = 13;
 
-	uint32 NoOrderFills = 14;
+	bool NoOrderFills = 14;
 
 	string InfoText = 15;
 
@@ -1302,8 +1302,8 @@ message PositionUpdate
 	double AveragePrice = 7;
 	string PositionIdentifier  = 8;
 	string TradeAccount = 9;
-	uint32 NoPositions = 10;
-	uint32 Unsolicited = 11;
+	bool NoPositions = 10;
+	bool Unsolicited = 11;
 	double MarginRequirement = 12;
 	uint32 EntryDateTime = 13;
 	double OpenProfitLoss = 14;
@@ -1331,7 +1331,7 @@ message CorrectingOrderFillResponse
 {
 	string ClientOrderID = 1;
 	string ResultText = 2;
-	int32 IsError = 3;
+	bool IsError = 3;
 }
 
 //============================================================================
@@ -1363,7 +1363,7 @@ message ExchangeListResponse
 {
 	int32 RequestID = 1;
 	string Exchange = 2;
-	uint32 IsFinalMessage = 3;
+	bool IsFinalMessage = 3;
 	string Description = 4;
 }
 
@@ -1435,7 +1435,7 @@ message SecurityDefinitionResponse
 	PriceDisplayFormatEnum PriceDisplayFormat = 7;
 	float CurrencyValuePerIncrement = 8;
 
-	uint32 IsFinalMessage = 9;
+	bool IsFinalMessage = 9;
 
 	float FloatToIntPriceMultiplier = 10;
 	float IntToFloatPriceDivisor = 11;
@@ -1475,7 +1475,7 @@ message SecurityDefinitionResponse
     uint32 OpenInterest = 30;
 
 	sfixed32 RolloverDate = 31;
-	uint32 IsDelayed = 32;	
+	bool IsDelayed = 32;	
 	int64 SecurityIdentifier = 33;
 
 	string ProductIdentifier = 34;
@@ -1519,8 +1519,8 @@ message AccountBalanceUpdate
 
 	int32 TotalNumberMessages = 8;
 	int32 MessageNumber = 9;
-	uint32 NoAccountBalances = 10;
-	uint32 Unsolicited = 11;
+	bool NoAccountBalances = 10;
+	bool Unsolicited = 11;
 	double OpenPositionsProfitLoss = 12;
 	double DailyProfitLoss = 13;
 	string InfoText = 14;
@@ -1529,12 +1529,12 @@ message AccountBalanceUpdate
 	double TrailingAccountValueToLimitPositions = 17;
 
 	uint32 DailyNetLossLimitReached = 18;
-	uint32 IsUnderRequiredMargin = 19;
+	bool IsUnderRequiredMargin = 19;
 
-	uint32 ClosePositionsAtEndOfDay = 20;
-	uint32 TradingIsDisabled = 21;
+	bool ClosePositionsAtEndOfDay = 20;
+	bool TradingIsDisabled = 21;
 	string Description = 22;
-	uint32 IsUnderRequiredAccountValue = 23;
+	bool IsUnderRequiredAccountValue = 23;
 	sfixed64 TransactionDateTime = 24;
 
 	double MarginRequirementFull = 25;
@@ -1594,8 +1594,8 @@ message HistoricalAccountBalanceResponse
 	double CashBalance = 3;
 	string AccountCurrency = 4;
 	string TradeAccount = 5;
-	uint32 IsFinalResponse= 6;
-	uint32 NoAccountBalances = 7;
+	bool IsFinalResponse= 6;
+	bool NoAccountBalances = 7;
 	string InfoText = 8;
 	string TransactionId = 9;
 }
@@ -1605,7 +1605,7 @@ message UserMessage
 {
 	string UserMessage = 1;
 
-	uint32 IsPopupMessage = 2;
+	bool IsPopupMessage = 2;
 }
 
 //============================================================================
@@ -1640,7 +1640,7 @@ message JournalEntryResponse
 {
 	string JournalEntry = 1;
 	uint64 DateTime = 2;
-	uint32 IsFinalResponse = 3;
+	bool IsFinalResponse = 3;
 };
 
 //============================================================================
@@ -1660,7 +1660,7 @@ message HistoricalPriceDataRequest
 	sfixed64 StartDateTime = 5;
 	sfixed64 EndDateTime = 6;
 	uint32 MaxDaysToReturn = 7;
-	uint32 UseZLibCompression = 8;
+	bool UseZLibCompression = 8;
 	uint32 RequestDividendAdjustedStockData = 9;
 	uint32 Integer_1 = 10;
 }
@@ -1671,9 +1671,9 @@ message HistoricalPriceDataResponseHeader
 	int32 RequestID = 1;
 	HistoricalDataIntervalEnum RecordInterval = 2;
 
-	uint32 UseZLibCompression = 3;
+	bool UseZLibCompression = 3;
 
-	uint32 NoRecordsToReturn = 4;
+	bool NoRecordsToReturn = 4;
 
 	float IntToFloatPriceDivisor = 5;
 }
@@ -1705,7 +1705,7 @@ message HistoricalPriceDataRecordResponse
 	double BidVolume = 9;
 	double AskVolume = 10;
 
-	uint32 IsFinalRecord = 11;
+	bool IsFinalRecord = 11;
 }
 
 //============================================================================
@@ -1719,7 +1719,7 @@ message HistoricalPriceDataTickRecordResponse
 	double Price = 4;
 	double Volume = 5;
 
-	uint32 IsFinalRecord = 6;
+	bool IsFinalRecord = 6;
 }
 
 //============================================================================
@@ -1737,7 +1737,7 @@ message HistoricalMarketDepthDataRequest
 	string Exchange = 3;
 	int64 StartDateTime = 4;
 	int64 EndDateTime = 5;
-	uint32 UseZLibCompression = 6;
+	bool UseZLibCompression = 6;
 	uint32 Integer_1 = 7;
 }
 
@@ -1745,8 +1745,8 @@ message HistoricalMarketDepthDataRequest
 message HistoricalMarketDepthDataResponseHeader
 {
 	int32 RequestID = 1;
-	uint32 UseZLibCompression = 2;
-	uint32 NoRecordsToReturn = 3;
+	bool UseZLibCompression = 2;
+	bool NoRecordsToReturn = 3;
 }
 
 //============================================================================
@@ -1767,7 +1767,7 @@ message HistoricalMarketDepthDataRecordResponse
 	uint32 NumOrders = 5;
 	float Price = 6;
 	uint32 Quantity = 7;
-	uint32 IsFinalRecord = 8;
+	bool IsFinalRecord = 8;
 }
 
 //============================================================================
